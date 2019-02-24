@@ -1,8 +1,12 @@
 .container {
-    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    font-family: 'Coiny', cursive;
     font-size: 1.5em;
 }
 
 .fas {
     font-size: 1.5em;
+}
+
+.fa-dice-d6 {
+    font-size: 3em;
 }
