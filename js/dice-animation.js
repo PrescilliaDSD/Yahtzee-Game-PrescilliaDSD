@@ -28,7 +28,7 @@ var app = {
     changedDice[2].addEventListener('click', app.diceBlock3);
     changedDice[3].addEventListener('click', app.diceBlock4);
     changedDice[4].addEventListener('click', app.diceBlock5);
-  };
+    };
 
   // On a le droit à trois lancers. Donc si le compteur arrive à 3
   counter += 1;
@@ -55,25 +55,58 @@ var app = {
     var dice2 = document.querySelector('#dice2');
     dice2.classList.toggle('selected');
     dice2.classList.toggle('text-info');
-},
+  },
 
   diceBlock3 : function() {
   var dice3 = document.querySelector('#dice3');
   dice3.classList.toggle('selected');
   dice3.classList.toggle('text-info');
-},
+  },
 
   diceBlock4 : function() {
   var dice4 = document.querySelector('#dice4');
   dice4.classList.toggle('selected');
   dice4.classList.toggle('text-info');
-},
+  },
 
   diceBlock5 : function() {
   var dice5 = document.querySelector('#dice5');
   dice5.classList.toggle('selected');
   dice5.classList.toggle('text-info');
-},
+  },
+
+  resetDice : function() {
+    var resetButton = document.querySelector('.reset-button');
+    var resetButtonDiv = document.querySelector('.reset-button-div');
+    resetButtonDiv.removeChild(resetButton);
+
+    var dice1 = document.querySelector('#dice1');
+    var dice2 = document.querySelector('#dice2');
+    var dice3 = document.querySelector('#dice3');
+    var dice4 = document.querySelector('#dice4');
+    var dice5 = document.querySelector('#dice5');
+
+    dice1.innerHTML = '<i class="all-dice fas fa-dice-one"></i>';
+    dice2.innerHTML = '<i class="all-dice fas fa-dice-two"></i>';
+    dice3.innerHTML = '<i class="all-dice fas fa-dice-three"></i>';
+    dice4.innerHTML = '<i class="all-dice fas fa-dice-four"></i>';
+    dice5.innerHTML = '<i class="all-dice fas fa-dice-five"></i>';
+
+    dice1.classList.remove('selected');
+    dice1.classList.remove('text-info');
+    dice2.classList.remove('selected');
+    dice2.classList.remove('text-info');
+    dice3.classList.remove('selected');
+    dice3.classList.remove('text-info');
+    dice4.classList.remove('selected');
+    dice4.classList.remove('text-info');
+    dice5.classList.remove('selected');
+    dice5.classList.remove('text-info');
+
+    counter = 0;
+  }
+
+
 }
 
 var counter = 0;
