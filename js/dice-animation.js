@@ -1,12 +1,12 @@
 var app = {
   init : function () {
     var diceButton = document.querySelector('.throw-dice');
-    // quand on click sur le bouton "lancer les dés", on applique la fonction diceResult
+    // quand on clique sur le bouton "lancer les dés", on applique la fonction diceResult
     diceButton.addEventListener('click', app.diceResult);   
   },
 
   diceResult : function () {
-    // chacun des 5 dés changent de valeurs, prise au hasard dans le tableau data.js
+    // chacun des 5 dés change de valeur, prise au hasard dans le tableau ci-dessous
     var dice = [
       '<i class="all-dice fas fa-dice-one"></i>',
       '<i class="all-dice fas fa-dice-two"></i>',
@@ -17,18 +17,31 @@ var app = {
     ];
 
     var changedDice = document.querySelectorAll('.dice-button');
-    
     for (var index = 0; index < changedDice.length; index += 1) {
-      if (changedDice[index].classList.contains('selected') === false) {
+      if (changedDice[index].classList.contains('selected') === false && counter < 3) {
       changedDice[index].innerHTML = dice[Math.floor(Math.random() * 6)];
     }
     
+    // On peut cliquer sur chaque dé individuellement afin de bloquer son résultat
     changedDice[0].addEventListener('click', app.diceBlock1);
     changedDice[1].addEventListener('click', app.diceBlock2);
     changedDice[2].addEventListener('click', app.diceBlock3);
     changedDice[3].addEventListener('click', app.diceBlock4);
     changedDice[4].addEventListener('click', app.diceBlock5);
+  };
 
+  // On a le droit à trois lancers. Donc si le compteur arrive à 3
+  counter += 1;
+  if (counter === 3) {
+    // On fait apparaître un bouton reset
+    var reset = document.createElement('button');
+    reset.className += ('bg-transparent');
+    reset.className += (' reset-button');
+    reset.innerHTML = "<i class=\"fas fa-redo-alt\"></i>";
+    var resetButtonDiv = document.querySelector('.reset-button-div');
+    resetButtonDiv.appendChild(reset);
+    // Sur ce bouton on ajoute un event listener pour appliquer la fonction app.resetDice
+    reset.addEventListener('click', app.resetDice);
   }
   },
 
@@ -63,7 +76,7 @@ var app = {
 },
 }
 
-
+var counter = 0;
 
 
 // Lorsque la page a fini de charger, je veux lancer la fonction init
