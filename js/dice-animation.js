@@ -30,49 +30,76 @@ var app = {
     changedDice[4].addEventListener('click', app.diceBlock5);
     };
 
-  // On a le droit à trois lancers. Donc si le compteur arrive à 3
+  // On a le droit à trois lancers. On lance donc un compteur pour limiter l'utilisation de la fonction.
   counter += 1;
+
+  // Dès lors qu'on a lancé les dés au moins une fois, on peut noter notre résultat dans le tableau
+  if (counter === 1) {
+  var scoreTd = document.querySelectorAll('.score-td');
+    for (tdCounter = 0; tdCounter < scoreTd.length; tdCounter += 1) {
+      var tdButton = document.createElement('button');
+      tdButton.className += ('bg-transparent ');
+      tdButton.className += ('score-button ');
+      tdButton.className += ('score-button-' + tdCounter)
+      tdButton.innerHTML = '<i class="fas fa-arrow-alt-circle-down"></i>';
+      scoreTd[tdCounter].appendChild(tdButton);
+    }
+  }
+
+  
   if (counter === 3) {
     // On fait apparaître un bouton reset
     var reset = document.createElement('button');
-    reset.className += ('bg-transparent');
-    reset.className += (' reset-button');
+    reset.className += ('bg-transparent ');
+    reset.className += ('reset-button ');
     reset.innerHTML = "<i class=\"fas fa-redo-alt\"></i>";
     var resetButtonDiv = document.querySelector('.reset-button-div');
     resetButtonDiv.appendChild(reset);
     // Sur ce bouton on ajoute un event listener pour appliquer la fonction app.resetDice
     reset.addEventListener('click', app.resetDice);
+
+    
   }
   },
 
   diceBlock1 : function() {
+    if (counter !== 0) {
       var dice1 = document.querySelector('#dice1');
       dice1.classList.toggle('selected');
       dice1.classList.toggle('text-info');      
+    }
   },
 
   diceBlock2 : function() {
+    if (counter !== 0) {
     var dice2 = document.querySelector('#dice2');
     dice2.classList.toggle('selected');
     dice2.classList.toggle('text-info');
+    }
   },
 
   diceBlock3 : function() {
+    if (counter !== 0) {
   var dice3 = document.querySelector('#dice3');
   dice3.classList.toggle('selected');
   dice3.classList.toggle('text-info');
+    }
   },
 
   diceBlock4 : function() {
+    if (counter !== 0) {
   var dice4 = document.querySelector('#dice4');
   dice4.classList.toggle('selected');
   dice4.classList.toggle('text-info');
+    }
   },
 
   diceBlock5 : function() {
+    if (counter !== 0) {
   var dice5 = document.querySelector('#dice5');
   dice5.classList.toggle('selected');
   dice5.classList.toggle('text-info');
+    }
   },
 
   resetDice : function() {
@@ -102,6 +129,14 @@ var app = {
     dice4.classList.remove('text-info');
     dice5.classList.remove('selected');
     dice5.classList.remove('text-info');
+
+    var scoreTd = document.querySelectorAll('.score-td');
+    
+    for (tdCounter = 0; tdCounter < scoreTd.length; tdCounter += 1) {
+      var scoreButton = document.querySelector('.score-button-' + tdCounter);
+      console.log(scoreButton);
+      scoreTd[tdCounter].removeChild(scoreButton);  
+    }
 
     counter = 0;
   },

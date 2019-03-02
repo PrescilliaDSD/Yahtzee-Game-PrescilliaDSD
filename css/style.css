@@ -3,12 +3,12 @@
     font-size: 1.5em;
 }
 
-.all-dice,  {
-    font-size: 4em;
+.dice-div  {
+    font-size: 2em;
 }
 
 .fas {
-    font-size: 3em;
+    font-size: 2em;
 }
 
 .dice-button, .throw-dice, .reset-button {
@@ -19,3 +19,7 @@
     color: #86cfda;
 }
 
+.score-button {
+    border: none;
+    font-size: 0.7em;
+}
