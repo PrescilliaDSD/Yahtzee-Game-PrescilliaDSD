@@ -104,13 +104,29 @@ var app = {
     dice5.classList.remove('text-info');
 
     counter = 0;
-  }
-
-
+  },
 }
 
-var counter = 0;
 
 
 // Lorsque la page a fini de charger, je veux lancer la fonction init
 document.addEventListener('DOMContentLoaded', app.init);
+// initialiser un compteur pour le nombre de lancers
+var counter = 0;
+
+// préparer la somme des totaux et le bonus
+// bonus
+var bonus = document.querySelector('.bonus');
+bonus.value = 0;
+bonus.textContent = bonus.value;
+// total supérieur
+var superiorScore = document.querySelector('.superior-score');
+superiorScore.value = 0;
+superiorScore.textContent = superiorScore.value;
+// total inférieur
+var inferiorScore = document.querySelector('.inferior-score');
+inferiorScore.value = 0;
+inferiorScore.textContent = inferiorScore.value;
+// total des totaux
+var finalScore = document.querySelector('.final-score');
+finalScore.textContent = inferiorScore.value + superiorScore.value;
