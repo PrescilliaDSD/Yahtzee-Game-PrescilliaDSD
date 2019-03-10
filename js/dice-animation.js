@@ -203,6 +203,8 @@ var app = {
     var buttonRemove = document.querySelectorAll('.score-button')
     var buttonParent = document.querySelectorAll('.score-td');
     for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+    // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+    // Si pas de class empty, on laisse l'enfant en place. 
       if (buttonParent[tdCounter].classList.contains('empty')) {
         buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
       }
