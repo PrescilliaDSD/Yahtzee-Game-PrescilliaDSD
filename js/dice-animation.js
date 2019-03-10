@@ -7,20 +7,20 @@ var app = {
 
   diceResult : function () {
     // chacun des 5 dés change de valeur, prise au hasard dans le tableau ci-dessous
-    var dice = [
-      '<i class="all-dice fas fa-dice-one"></i>',
-      '<i class="all-dice fas fa-dice-two"></i>',
-      '<i class="all-dice fas fa-dice-three"></i>',    
-      '<i class="all-dice fas fa-dice-four"></i>',
-      '<i class="all-dice fas fa-dice-five"></i>',
-      '<i class="all-dice fas fa-dice-six"></i>',
-    ];
+        var dice = [
+        '<i class="all-dice fas fa-dice-one"></i>',
+        '<i class="all-dice fas fa-dice-two"></i>',
+        '<i class="all-dice fas fa-dice-three"></i>',    
+        '<i class="all-dice fas fa-dice-four"></i>',
+        '<i class="all-dice fas fa-dice-five"></i>',
+        '<i class="all-dice fas fa-dice-six"></i>',
+      ];
 
-    var changedDice = document.querySelectorAll('.dice-button');
-    for (var index = 0; index < changedDice.length; index += 1) {
-      if (changedDice[index].classList.contains('selected') === false && counter < 3) {
-      changedDice[index].innerHTML = dice[Math.floor(Math.random() * 6)];
-    }
+      var changedDice = document.querySelectorAll('.dice-button');
+      for (var index = 0; index < changedDice.length; index += 1) {
+        if (changedDice[index].classList.contains('selected') === false && counter < 3) {
+        changedDice[index].innerHTML = dice[Math.floor(Math.random() * 6)];
+      }
     
     // On peut cliquer sur chaque dé individuellement afin de bloquer son résultat
     changedDice[0].addEventListener('click', app.diceBlock1);
@@ -37,32 +37,57 @@ var app = {
   if (counter === 1) {
   var scoreTd = document.querySelectorAll('.score-td');
     for (tdCounter = 0; tdCounter < scoreTd.length; tdCounter += 1) {
+      if (scoreTd[tdCounter].classList.contains('empty')) {
       var tdButton = document.createElement('button');
       tdButton.className += ('bg-transparent ');
       tdButton.className += ('score-button ');
       tdButton.className += ('score-button-' + tdCounter)
       tdButton.innerHTML = '<i class="fas fa-arrow-alt-circle-down"></i>';
       scoreTd[tdCounter].appendChild(tdButton);
+      }
     }
 
-    document.querySelector('.score-button-0').addEventListener('click', app.enterScore0);
-    document.querySelector('.score-button-1').addEventListener('click', app.enterScore1);
-    document.querySelector('.score-button-2').addEventListener('click', app.enterScore2);
-    document.querySelector('.score-button-3').addEventListener('click', app.enterScore3);
-    document.querySelector('.score-button-4').addEventListener('click', app.enterScore4);
-    document.querySelector('.score-button-5').addEventListener('click', app.enterScore5);
-    document.querySelector('.score-button-6').addEventListener('click', app.enterScore6);
-    document.querySelector('.score-button-7').addEventListener('click', app.enterScore7);
-    document.querySelector('.score-button-8').addEventListener('click', app.enterScore8);
-    document.querySelector('.score-button-9').addEventListener('click', app.enterScore9);
-    document.querySelector('.score-button-10').addEventListener('click', app.enterScore10);
-    document.querySelector('.score-button-11').addEventListener('click', app.enterScore11);
-    document.querySelector('.score-button-12').addEventListener('click', app.enterScore12);
+    if (document.querySelector('.score-button-0')) {
+      document.querySelector('.score-button-0').addEventListener('click', app.enterScore0);
+    }
+    if (document.querySelector('.score-button-1')) {
+      document.querySelector('.score-button-1').addEventListener('click', app.enterScore1);
+    }
+    if (document.querySelector('.score-button-2')) {
+      document.querySelector('.score-button-2').addEventListener('click', app.enterScore2);
+    }
+    if (document.querySelector('.score-button-3')) {
+      document.querySelector('.score-button-3').addEventListener('click', app.enterScore3);
+    }
+    if (document.querySelector('.score-button-4')) {
+      document.querySelector('.score-button-4').addEventListener('click', app.enterScore4);
+    }
+    if (document.querySelector('.score-button-5')) {
+      document.querySelector('.score-button-5').addEventListener('click', app.enterScore5);
+    }
+    if (document.querySelector('.score-button-6')) {
+      document.querySelector('.score-button-6').addEventListener('click', app.enterScore6);
+    }
+    if (document.querySelector('.score-button-7')) {
+      document.querySelector('.score-button-7').addEventListener('click', app.enterScore7);
+    }
+    if (document.querySelector('.score-button-8')) {
+      document.querySelector('.score-button-8').addEventListener('click', app.enterScore8);
+    }
+    if (document.querySelector('.score-button-9')) {
+      document.querySelector('.score-button-9').addEventListener('click', app.enterScore9);
+    }
+    if (document.querySelector('.score-button-10')) {
+      document.querySelector('.score-button-10').addEventListener('click', app.enterScore10);
+    }
+    if (document.querySelector('.score-button-11')) {
+      document.querySelector('.score-button-11').addEventListener('click', app.enterScore11);
+    }
+    if (document.querySelector('.score-button-12')) {
+      document.querySelector('.score-button-12').addEventListener('click', app.enterScore12);
+    }
   }
-  
-  if (counter === 3) {
-    app.reset();
-  }
+
   },
 
   diceBlock1 : function() {
@@ -105,22 +130,8 @@ var app = {
     }
   },
 
-  reset : function() {
-        // On fait apparaître un bouton reset
-        var reset = document.createElement('button');
-        reset.className += ('bg-transparent ');
-        reset.className += ('reset-button ');
-        reset.innerHTML = "<i class=\"fas fa-redo-alt\"></i>";
-        var resetButtonDiv = document.querySelector('.reset-button-div');
-        resetButtonDiv.appendChild(reset);
-        // Sur ce bouton on ajoute un event listener pour appliquer la fonction app.resetDice
-        reset.addEventListener('click', app.resetDice);
-  },
 
   resetDice : function() {
-    var resetButton = document.querySelector('.reset-button');
-    var resetButtonDiv = document.querySelector('.reset-button-div');
-    resetButtonDiv.removeChild(resetButton);
 
     var dice1 = document.querySelector('#dice1');
     var dice2 = document.querySelector('#dice2');
@@ -145,21 +156,10 @@ var app = {
     dice5.classList.remove('selected');
     dice5.classList.remove('text-info');
 
-    var scoreTd = document.querySelectorAll('.score-td');
-    
-    for (tdCounter = 0; tdCounter < scoreTd.length; tdCounter += 1) {
-      var scoreButton = document.querySelector('.score-button-' + tdCounter);
-      scoreTd[tdCounter].removeChild(scoreButton);  
-    }
-
     counter = 0;
   },
 
-  enterScore0 : function() {
-    // si on clique sur le bouton du score, faire apparaître le bouton reset, seulement dans le cas où il n'est pas déjà là.
-    if (counter !== 3) {
-      app.reset();
-    }
+  enterScore0 : function() {   
     // on sélectionne tous les dés pour savoir combien il y a de "1".
     var howManyDice = document.querySelectorAll('.all-dice');
     var diceOne = 0;
@@ -168,22 +168,58 @@ var app = {
         diceOne += 1;
       }
     }
-    // Une fois qu'on a compté le nombre de "1", on veut faire disparaître le bouton.
-    var buttonRemove = document.querySelector('.score-button-0')
-    var buttonParent = document.querySelectorAll('.score-td');
-    buttonParent[0].removeChild(buttonRemove);
-    // Ensuite on souhaite faire apparaître la valeur de diceOne dans la case.
-    var newP = document.createElement('p');
-    newP.value = diceOne;
-    newP.textContent = newP.value;
-    buttonParent[0].appendChild(newP);
+    // Une fois qu'on a compté le nombre de "1", on veut faire disparaître les boutons.
 
-    counter = 0;
+    var buttonRemove = document.querySelectorAll('.score-button')
+    var buttonParent = document.querySelectorAll('.score-td');
+    for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+      buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+    }
+    // Ensuite on souhaite faire apparaître la valeur de diceOne dans la case.
+    var newP0 = document.createElement('p');
+    newP0.classList.add('already-fill-0');
+    newP0.classList.add('score-button');
+    newP0.value = diceOne;
+    newP0.textContent = newP0.value;
+    buttonParent[0].appendChild(newP0);
+
+    buttonParent[0].classList.remove('empty');
+    // on reset les dés
+    app.resetDice();
+
   },
 
   enterScore1 : function() {
-    counter = 2;
-    app.diceResult();
+    // on sélectionne tous les dés pour savoir combien il y a de "2".
+    var howManyDice = document.querySelectorAll('.all-dice');
+    var diceTwo = 0;
+    for (var tdCounter = 0; tdCounter < howManyDice.length; tdCounter += 1) {
+      if (howManyDice[tdCounter].classList.contains('fa-dice-two')) {
+        diceTwo += 2;
+      }
+    }
+    // Une fois qu'on a compté le nombre de "2", on veut faire disparaître les boutons.
+
+    var buttonRemove = document.querySelectorAll('.score-button')
+    var buttonParent = document.querySelectorAll('.score-td');
+    for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+      if (buttonParent[tdCounter].classList.contains('empty')) {
+        buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+      }
+      
+    }
+    // Ensuite on souhaite faire apparaître la valeur de diceTwo dans la case.
+    var newP1 = document.createElement('p');
+    newP1.classList.add('already-fill-1');
+    newP1.classList.add('score-button');
+    newP1.value = diceTwo;
+    newP1.textContent = newP1.value;
+    buttonParent[1].appendChild(newP1);
+
+    buttonParent[1].classList.remove('empty');
+    // on reset les dés
+    app.resetDice();
+
   },
 
   enterScore2 : function() {
