@@ -44,21 +44,24 @@ var app = {
       tdButton.innerHTML = '<i class="fas fa-arrow-alt-circle-down"></i>';
       scoreTd[tdCounter].appendChild(tdButton);
     }
-  }
 
+    document.querySelector('.score-button-0').addEventListener('click', app.enterScore0);
+    document.querySelector('.score-button-1').addEventListener('click', app.enterScore1);
+    document.querySelector('.score-button-2').addEventListener('click', app.enterScore2);
+    document.querySelector('.score-button-3').addEventListener('click', app.enterScore3);
+    document.querySelector('.score-button-4').addEventListener('click', app.enterScore4);
+    document.querySelector('.score-button-5').addEventListener('click', app.enterScore5);
+    document.querySelector('.score-button-6').addEventListener('click', app.enterScore6);
+    document.querySelector('.score-button-7').addEventListener('click', app.enterScore7);
+    document.querySelector('.score-button-8').addEventListener('click', app.enterScore8);
+    document.querySelector('.score-button-9').addEventListener('click', app.enterScore9);
+    document.querySelector('.score-button-10').addEventListener('click', app.enterScore10);
+    document.querySelector('.score-button-11').addEventListener('click', app.enterScore11);
+    document.querySelector('.score-button-12').addEventListener('click', app.enterScore12);
+  }
   
   if (counter === 3) {
-    // On fait apparaître un bouton reset
-    var reset = document.createElement('button');
-    reset.className += ('bg-transparent ');
-    reset.className += ('reset-button ');
-    reset.innerHTML = "<i class=\"fas fa-redo-alt\"></i>";
-    var resetButtonDiv = document.querySelector('.reset-button-div');
-    resetButtonDiv.appendChild(reset);
-    // Sur ce bouton on ajoute un event listener pour appliquer la fonction app.resetDice
-    reset.addEventListener('click', app.resetDice);
-
-    
+    app.reset();
   }
   },
 
@@ -102,6 +105,18 @@ var app = {
     }
   },
 
+  reset : function() {
+        // On fait apparaître un bouton reset
+        var reset = document.createElement('button');
+        reset.className += ('bg-transparent ');
+        reset.className += ('reset-button ');
+        reset.innerHTML = "<i class=\"fas fa-redo-alt\"></i>";
+        var resetButtonDiv = document.querySelector('.reset-button-div');
+        resetButtonDiv.appendChild(reset);
+        // Sur ce bouton on ajoute un event listener pour appliquer la fonction app.resetDice
+        reset.addEventListener('click', app.resetDice);
+  },
+
   resetDice : function() {
     var resetButton = document.querySelector('.reset-button');
     var resetButtonDiv = document.querySelector('.reset-button-div');
@@ -134,12 +149,98 @@ var app = {
     
     for (tdCounter = 0; tdCounter < scoreTd.length; tdCounter += 1) {
       var scoreButton = document.querySelector('.score-button-' + tdCounter);
-      console.log(scoreButton);
       scoreTd[tdCounter].removeChild(scoreButton);  
     }
 
     counter = 0;
   },
+
+  enterScore0 : function() {
+    // si on clique sur le bouton du score, faire apparaître le bouton reset, seulement dans le cas où il n'est pas déjà là.
+    if (counter !== 3) {
+      app.reset();
+    }
+    // on sélectionne tous les dés pour savoir combien il y a de "1".
+    var howManyDice = document.querySelectorAll('.all-dice');
+    var diceOne = 0;
+    for (var tdCounter = 0; tdCounter < howManyDice.length; tdCounter += 1) {
+      if (howManyDice[tdCounter].classList.contains('fa-dice-one')) {
+        diceOne += 1;
+      }
+    }
+    // Une fois qu'on a compté le nombre de "1", on veut faire disparaître le bouton.
+    var buttonRemove = document.querySelector('.score-button-0')
+    var buttonParent = document.querySelectorAll('.score-td');
+    buttonParent[0].removeChild(buttonRemove);
+    // Ensuite on souhaite faire apparaître la valeur de diceOne dans la case.
+    var newP = document.createElement('p');
+    newP.value = diceOne;
+    newP.textContent = newP.value;
+    buttonParent[0].appendChild(newP);
+
+    counter = 0;
+  },
+
+  enterScore1 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
+  enterScore2 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
+  enterScore3 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
+  enterScore4 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
+  enterScore5 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
+  enterScore6 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
+  enterScore7 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
+  enterScore8 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
+  enterScore9 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
+  enterScore10 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
+  enterScore11 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
+  enterScore12 : function() {
+    counter = 2;
+    app.diceResult();
+  },
+
 }
 
 
