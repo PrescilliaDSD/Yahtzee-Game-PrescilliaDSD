@@ -173,7 +173,9 @@ var app = {
     var buttonRemove = document.querySelectorAll('.score-button')
     var buttonParent = document.querySelectorAll('.score-td');
     for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
-      buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+      if (buttonParent[tdCounter].classList.contains('empty')) {
+        buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+      }
     }
     // Ensuite on souhaite faire apparaître la valeur de diceOne dans la case.
     var newP0 = document.createElement('p');
@@ -225,58 +227,167 @@ var app = {
   },
 
   enterScore2 : function() {
-    counter = 2;
-    app.diceResult();
+    // on sélectionne tous les dés pour savoir combien il y a de "3".
+    var howManyDice = document.querySelectorAll('.all-dice');
+    var diceThree = 0;
+    for (var tdCounter = 0; tdCounter < howManyDice.length; tdCounter += 1) {
+      if (howManyDice[tdCounter].classList.contains('fa-dice-three')) {
+        diceThree += 3;
+      }
+    }
+    // Une fois qu'on a compté le nombre de "3", on veut faire disparaître les boutons.
+
+    var buttonRemove = document.querySelectorAll('.score-button')
+    var buttonParent = document.querySelectorAll('.score-td');
+    for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+    // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+    // Si pas de class empty, on laisse l'enfant en place. 
+      if (buttonParent[tdCounter].classList.contains('empty')) {
+        buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+      }
+      
+    }
+    // Ensuite on souhaite faire apparaître la valeur de diceThree dans la case.
+    var newP2 = document.createElement('p');
+    newP2.classList.add('already-fill-2');
+    newP2.classList.add('score-button');
+    newP2.value = diceThree;
+    newP2.textContent = newP2.value;
+    buttonParent[2].appendChild(newP2);
+
+    buttonParent[2].classList.remove('empty');
+    // on reset les dés
+    app.resetDice();   
   },
 
   enterScore3 : function() {
-    counter = 2;
-    app.diceResult();
+    // on sélectionne tous les dés pour savoir combien il y a de "4".
+    var howManyDice = document.querySelectorAll('.all-dice');
+    var diceFour = 0;
+    for (var tdCounter = 0; tdCounter < howManyDice.length; tdCounter += 1) {
+      if (howManyDice[tdCounter].classList.contains('fa-dice-four')) {
+        diceFour += 4;
+      }
+    }
+    // Une fois qu'on a compté le nombre de "4", on veut faire disparaître les boutons.
+
+    var buttonRemove = document.querySelectorAll('.score-button')
+    var buttonParent = document.querySelectorAll('.score-td');
+    for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+    // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+    // Si pas de class empty, on laisse l'enfant en place. 
+      if (buttonParent[tdCounter].classList.contains('empty')) {
+        buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+      }
+      
+    }
+    // Ensuite on souhaite faire apparaître la valeur de diceFour dans la case.
+    var newP3 = document.createElement('p');
+    newP3.classList.add('already-fill-3');
+    newP3.classList.add('score-button');
+    newP3.value = diceFour;
+    newP3.textContent = newP3.value;
+    buttonParent[3].appendChild(newP3);
+
+    buttonParent[3].classList.remove('empty');
+    // on reset les dés
+    app.resetDice();   
   },
 
   enterScore4 : function() {
-    counter = 2;
-    app.diceResult();
+    // on sélectionne tous les dés pour savoir combien il y a de "5".
+    var howManyDice = document.querySelectorAll('.all-dice');
+    var diceFive = 0;
+    for (var tdCounter = 0; tdCounter < howManyDice.length; tdCounter += 1) {
+      if (howManyDice[tdCounter].classList.contains('fa-dice-five')) {
+        diceFive += 5;
+      }
+    }
+    // Une fois qu'on a compté le nombre de "5", on veut faire disparaître les boutons.
+
+    var buttonRemove = document.querySelectorAll('.score-button')
+    var buttonParent = document.querySelectorAll('.score-td');
+    for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+    // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+    // Si pas de class empty, on laisse l'enfant en place. 
+      if (buttonParent[tdCounter].classList.contains('empty')) {
+        buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+      }
+      
+    }
+    // Ensuite on souhaite faire apparaître la valeur de diceFive dans la case.
+    var newP4 = document.createElement('p');
+    newP4.classList.add('already-fill-4');
+    newP4.classList.add('score-button');
+    newP4.value = diceFive;
+    newP4.textContent = newP4.value;
+    buttonParent[4].appendChild(newP4);
+
+    buttonParent[4].classList.remove('empty');
+    // on reset les dés
+    app.resetDice();   
   },
 
   enterScore5 : function() {
-    counter = 2;
-    app.diceResult();
+    // on sélectionne tous les dés pour savoir combien il y a de "6".
+    var howManyDice = document.querySelectorAll('.all-dice');
+    var diceSix = 0;
+    for (var tdCounter = 0; tdCounter < howManyDice.length; tdCounter += 1) {
+      if (howManyDice[tdCounter].classList.contains('fa-dice-six')) {
+        diceSix += 6;
+      }
+    }
+    // Une fois qu'on a compté le nombre de "6", on veut faire disparaître les boutons.
+
+    var buttonRemove = document.querySelectorAll('.score-button')
+    var buttonParent = document.querySelectorAll('.score-td');
+    for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+    // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+    // Si pas de class empty, on laisse l'enfant en place. 
+      if (buttonParent[tdCounter].classList.contains('empty')) {
+        buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+      }
+      
+    }
+    // Ensuite on souhaite faire apparaître la valeur de diceSix dans la case.
+    var newP5 = document.createElement('p');
+    newP5.classList.add('already-fill-5');
+    newP5.classList.add('score-button');
+    newP5.value = diceSix;
+    newP5.textContent = newP5.value;
+    buttonParent[5].appendChild(newP5);
+
+    buttonParent[5].classList.remove('empty');
+    // on reset les dés
+    app.resetDice(); 
   },
 
   enterScore6 : function() {
-    counter = 2;
-    app.diceResult();
+
   },
 
   enterScore7 : function() {
-    counter = 2;
-    app.diceResult();
+ 
   },
 
   enterScore8 : function() {
-    counter = 2;
-    app.diceResult();
+
   },
 
   enterScore9 : function() {
-    counter = 2;
-    app.diceResult();
+ 
   },
 
   enterScore10 : function() {
-    counter = 2;
-    app.diceResult();
+
   },
 
   enterScore11 : function() {
-    counter = 2;
-    app.diceResult();
+
   },
 
   enterScore12 : function() {
-    counter = 2;
-    app.diceResult();
+
   },
 
 }
