@@ -414,7 +414,45 @@ var app = {
   },
 
   enterScore11 : function() {
+    var yamsValue = 0;
+    var yamsScore = 0;
+    var yams = document.querySelectorAll('.all-dice');
+    for (var counter = 0; counter < yams.length - 1; counter += 1) {
+      if ((yams[counter].outerHTML == yams[counter + 1].outerHTML) === true ) {
+        yamsValue += 1;
+      } else {
+        yamsValue = 0;
+      }
+    }
+    if (yamsValue === 4) {
+       yamsScore = 50;
+      }
 
+
+      var buttonRemove = document.querySelectorAll('.score-button')
+      var buttonParent = document.querySelectorAll('.score-td');
+      for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+      // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+      // Si pas de class empty, on laisse l'enfant en place. 
+        if (buttonParent[tdCounter].classList.contains('empty')) {
+          buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+        }
+        
+      }
+      var newP11 = document.createElement('p');
+      newP11.classList.add('already-fill-11');
+      newP11.classList.add('score-button');
+      newP11.value = yamsScore;
+      newP11.textContent = newP11.value;
+      buttonParent[11].appendChild(newP11);
+  
+      buttonParent[11].classList.remove('empty');
+      // on reset les dés
+      app.resetDice();   
+  
+      inferiorScore.value += yamsScore;
+      inferiorScore.textContent = superiorScore.value;
+      app.finalScore(superiorScore, inferiorScore, bonus);
   },
 
   enterScore12 : function() {
@@ -453,7 +491,6 @@ var app = {
       }
       
     }
-    // Ensuite on souhaite faire apparaître la valeur de diceFive dans la case.
     var newP12 = document.createElement('p');
     newP12.classList.add('already-fill-12');
     newP12.classList.add('score-button');
