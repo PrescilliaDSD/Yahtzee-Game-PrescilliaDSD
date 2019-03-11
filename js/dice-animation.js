@@ -189,6 +189,11 @@ var app = {
     // on reset les dés
     app.resetDice();
 
+    superiorScore.value += diceOne;
+    superiorScore.textContent = superiorScore.value;
+    app.bonus(superiorScore, bonus);
+    app.finalScore(superiorScore, inferiorScore, bonus);
+
   },
 
   enterScore1 : function() {
@@ -224,6 +229,12 @@ var app = {
     // on reset les dés
     app.resetDice();
 
+    superiorScore.value += diceTwo;
+    superiorScore.textContent = superiorScore.value;
+    app.bonus(superiorScore, bonus);
+    app.finalScore(superiorScore, inferiorScore, bonus);
+    
+
   },
 
   enterScore2 : function() {
@@ -257,7 +268,12 @@ var app = {
 
     buttonParent[2].classList.remove('empty');
     // on reset les dés
-    app.resetDice();   
+    app.resetDice();
+
+    superiorScore.value += diceThree;
+    superiorScore.textContent = superiorScore.value;
+    app.bonus(superiorScore, bonus);
+    app.finalScore(superiorScore, inferiorScore, bonus);
   },
 
   enterScore3 : function() {
@@ -292,6 +308,11 @@ var app = {
     buttonParent[3].classList.remove('empty');
     // on reset les dés
     app.resetDice();   
+
+    superiorScore.value += diceFour;
+    superiorScore.textContent = superiorScore.value;
+    app.bonus(superiorScore, bonus);
+    app.finalScore(superiorScore, inferiorScore, bonus);
   },
 
   enterScore4 : function() {
@@ -326,6 +347,11 @@ var app = {
     buttonParent[4].classList.remove('empty');
     // on reset les dés
     app.resetDice();   
+
+    superiorScore.value += diceFive;
+    superiorScore.textContent = superiorScore.value;
+    app.bonus(superiorScore, bonus);
+    app.finalScore(superiorScore, inferiorScore, bonus);
   },
 
   enterScore5 : function() {
@@ -360,6 +386,11 @@ var app = {
     buttonParent[5].classList.remove('empty');
     // on reset les dés
     app.resetDice(); 
+
+    superiorScore.value += diceSix;
+    superiorScore.textContent = superiorScore.value;
+    app.bonus(superiorScore, bonus);
+    app.finalScore(superiorScore, inferiorScore, bonus);
   },
 
   enterScore6 : function() {
@@ -390,6 +421,18 @@ var app = {
 
   },
 
+  bonus : function(superiorScore, bonus) {
+    if (superiorScore.value >= 62) {
+      bonus.value = 35;
+      bonus.textContent = bonus.value;
+    }
+  },
+
+  finalScore : function(superiorScore, inferiorScore, bonus) {
+    finalScore.value = superiorScore.value + inferiorScore.value + bonus.value;
+    finalScore.textContent = finalScore.value;
+  }
+
 }
 
 
@@ -414,4 +457,4 @@ inferiorScore.value = 0;
 inferiorScore.textContent = inferiorScore.value;
 // total des totaux
 var finalScore = document.querySelector('.final-score');
-finalScore.textContent = inferiorScore.value + superiorScore.value;
+finalScore.textContent = 0
