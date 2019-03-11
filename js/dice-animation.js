@@ -418,8 +418,58 @@ var app = {
   },
 
   enterScore12 : function() {
+    var chanceScore = 0;
+    // on sélectionne tous les dés de résultats
+    var chance = document.querySelectorAll('.all-dice');
+    // on additionne toutes les valeurs
+    for (var counter = 0; counter < chance.length; counter += 1) {
+      if (chance[counter].classList.contains('fa-dice-one')) {
+        chanceScore += 1;
+      }
+      else if (chance[counter].classList.contains('fa-dice-two')) {
+        chanceScore += 2;
+      }
+      else if (chance[counter].classList.contains('fa-dice-three')) {
+        chanceScore += 3;
+      }
+      else if (chance[counter].classList.contains('fa-dice-four')) {
+        chanceScore += 4;
+      }
+      else if (chance[counter].classList.contains('fa-dice-five')) {
+        chanceScore += 5;
+      }
+      else if (chance[counter].classList.contains('fa-dice-six')) {
+        chanceScore += 6;
+      }
+    }
+      
+    var buttonRemove = document.querySelectorAll('.score-button')
+    var buttonParent = document.querySelectorAll('.score-td');
+    for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+    // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+    // Si pas de class empty, on laisse l'enfant en place. 
+      if (buttonParent[tdCounter].classList.contains('empty')) {
+        buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+      }
+      
+    }
+    // Ensuite on souhaite faire apparaître la valeur de diceFive dans la case.
+    var newP12 = document.createElement('p');
+    newP12.classList.add('already-fill-12');
+    newP12.classList.add('score-button');
+    newP12.value = chanceScore;
+    newP12.textContent = newP12.value;
+    buttonParent[12].appendChild(newP12);
 
-  },
+    buttonParent[12].classList.remove('empty');
+    // on reset les dés
+    app.resetDice();   
+
+    inferiorScore.value += chanceScore;
+    inferiorScore.textContent = superiorScore.value;
+    app.finalScore(superiorScore, inferiorScore, bonus);
+
+    },
 
   bonus : function(superiorScore, bonus) {
     if (superiorScore.value >= 62) {
