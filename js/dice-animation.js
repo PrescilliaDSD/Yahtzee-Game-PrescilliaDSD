@@ -394,23 +394,206 @@ var app = {
   },
 
   enterScore6 : function() {
+    // en prenant chaque valeur possible de dés, on va parcourir le tableau pour savoir combien de fois ils apparaissent.
+    // On parcourt pour voir combien il y a de one, de two, etc...
+    // Si on trouve trois fois ou plus la même occurrence, on arrête.
+    // On entre alors le score dans brelan, total des 5 dés.
+    // Si a la fin on a pas trouvé au minimum 3 fois la même occurrence, on met un 0 pour le score.
+    var trio = document.querySelectorAll('.all-dice');
+    var trioScore = 0;
+    var diceOne = 0;
+    var diceTwo = 0;
+    var diceThree = 0;
+    var diceFour = 0;
+    var diceFive = 0;
+    var diceSix = 0; 
+    for (var tdCount = 0; tdCount < trio.length; tdCount += 1) {
+      if (trio[tdCount].classList.contains('fa-dice-one')) {
+        diceOne += 1;
+      } else if (trio[tdCount].classList.contains('fa-dice-two')) {
+        diceTwo += 1;
+      }
+      else if (trio[tdCount].classList.contains('fa-dice-three')) {
+        diceThree += 1;
+      }
+      else if (trio[tdCount].classList.contains('fa-dice-four')) {
+        diceFour += 1;
+      }
+      else if (trio[tdCount].classList.contains('fa-dice-five')) {
+        diceFive += 1;
+      }
+      else if (trio[tdCount].classList.contains('fa-dice-six')) {
+        diceSix += 1;
+      }
+    }
+
+    if (diceOne >= 3 || diceTwo >= 3 || diceThree >= 3 || diceFour >= 3 || diceFive >= 3 || diceSix >= 3 ) {
+      for (var counter = 0; counter < trio.length; counter += 1) {
+        if (trio[counter].classList.contains('fa-dice-one')) {
+          trioScore += 1;
+        }
+        else if (trio[counter].classList.contains('fa-dice-two')) {
+          trioScore += 2;
+        }
+        else if (trio[counter].classList.contains('fa-dice-three')) {
+          trioScore += 3;
+        }
+        else if (trio[counter].classList.contains('fa-dice-four')) {
+          trioScore += 4;
+        }
+        else if (trio[counter].classList.contains('fa-dice-five')) {
+          trioScore += 5;
+        }
+        else if (trio[counter].classList.contains('fa-dice-six')) {
+          trioScore += 6;
+        }
+      }
+    }
+
+    var buttonRemove = document.querySelectorAll('.score-button')
+      var buttonParent = document.querySelectorAll('.score-td');
+      for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+      // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+      // Si pas de class empty, on laisse l'enfant en place. 
+        if (buttonParent[tdCounter].classList.contains('empty')) {
+          buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+        }
+        
+      }
+      var newP6 = document.createElement('p');
+      newP6.classList.add('already-fill-6');
+      newP6.classList.add('score-button');
+      newP6.value = trioScore;
+      newP6.textContent = newP6.value;
+      buttonParent[6].appendChild(newP6);
+  
+      buttonParent[6].classList.remove('empty');
+      // on reset les dés
+      app.resetDice();   
+  
+      inferiorScore.value += trioScore;
+      inferiorScore.textContent = inferiorScore.value;
+      app.finalScore(superiorScore, inferiorScore, bonus);
+  
 
   },
 
   enterScore7 : function() {
- 
+    // en prenant chaque valeur possible de dés, on va parcourir le tableau pour savoir combien de fois ils apparaissent.
+    // On parcourt pour voir combien il y a de one, de two, etc...
+    // Si on trouve quatre fois ou plus la même occurrence, on arrête.
+    // On entre alors le score dans carré, total des 5 dés.
+    // Si a la fin on a pas trouvé au minimum 4 fois la même occurrence, on met un 0 pour le score.
+    var quadra = document.querySelectorAll('.all-dice');
+    var quadraScore = 0;
+    var diceOne = 0;
+    var diceTwo = 0;
+    var diceThree = 0;
+    var diceFour = 0;
+    var diceFive = 0;
+    var diceSix = 0; 
+    for (var tdCount = 0; tdCount < quadra.length; tdCount += 1) {
+      if (quadra[tdCount].classList.contains('fa-dice-one')) {
+        diceOne += 1;
+      } else if (quadra[tdCount].classList.contains('fa-dice-two')) {
+        diceTwo += 1;
+      }
+      else if (quadra[tdCount].classList.contains('fa-dice-three')) {
+        diceThree += 1;
+      }
+      else if (quadra[tdCount].classList.contains('fa-dice-four')) {
+        diceFour += 1;
+      }
+      else if (quadra[tdCount].classList.contains('fa-dice-five')) {
+        diceFive += 1;
+      }
+      else if (quadra[tdCount].classList.contains('fa-dice-six')) {
+        diceSix += 1;
+      }
+    }
+
+    if (diceOne >= 4 || diceTwo >= 4 || diceThree >= 4 || diceFour >= 4 || diceFive >= 4 || diceSix >= 4 ) {
+      for (var counter = 0; counter < quadra.length; counter += 1) {
+        if (quadra[counter].classList.contains('fa-dice-one')) {
+          quadraScore += 1;
+        }
+        else if (quadra[counter].classList.contains('fa-dice-two')) {
+          quadraScore += 2;
+        }
+        else if (quadra[counter].classList.contains('fa-dice-three')) {
+          quadraScore += 3;
+        }
+        else if (quadra[counter].classList.contains('fa-dice-four')) {
+          quadraScore += 4;
+        }
+        else if (quadra[counter].classList.contains('fa-dice-five')) {
+          quadraScore += 5;
+        }
+        else if (quadra[counter].classList.contains('fa-dice-six')) {
+          quadraScore += 6;
+        }
+      }
+    }
+
+    var buttonRemove = document.querySelectorAll('.score-button')
+      var buttonParent = document.querySelectorAll('.score-td');
+      for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+      // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+      // Si pas de class empty, on laisse l'enfant en place. 
+        if (buttonParent[tdCounter].classList.contains('empty')) {
+          buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+        }
+        
+      }
+      var newP7 = document.createElement('p');
+      newP7.classList.add('already-fill-7');
+      newP7.classList.add('score-button');
+      newP7.value = quadraScore;
+      newP7.textContent = newP7.value;
+      buttonParent[7].appendChild(newP7);
+  
+      buttonParent[7].classList.remove('empty');
+      // on reset les dés
+      app.resetDice();   
+  
+      inferiorScore.value += quadraScore;
+      inferiorScore.textContent = inferiorScore.value;
+      app.finalScore(superiorScore, inferiorScore, bonus);
   },
 
   enterScore8 : function() {
+    // Ici on cherche à avoir 2 fois le même dé puis 3 fois le même dé.
+    // On parcourt pour trouver 2 ou 3 fois le 1.
+    // Si c'est 3, on refait une autre boucle pour trouver 2 fois un autre chiffrE.
+    // Si pas ok, on met 0 dans le score.     
+    // Si ok, on met 25 dans le score.
 
+  
   },
 
   enterScore9 : function() {
- 
+    // Ici on veut savoir si on trouve une suite 1,2,3,4 ou 2,3,4,5 ou 3,4,5,6
+    // On parcourt une fois le tableau pour trouver un 3 car commun sur les 3 suites possibles.
+    // Si c'est ok on parcourt pour trouver un 4 car commun aussi sur les 3 suites possibles.
+    // Si pas ok, on met 0 dans le score. 
+    // Si c'est ok on cherche un 1, puis un 2.
+    // Dans ce cas la suite est ok, on entre 30 dans le score.
+    // Si c'est pas ok pour le 1, on cherche un 2, puis un 5.
+    // Dans ce cas la suite est ok, on entre 30 dans le score.
+    // Si c'est pas ok pour le 2, on cherche un 5 puis un 6.
+    // Dans ce cas la suite est ok, on entre 30 dans le score. 
+    // Si c'est pas ok, on met 0 dans le score. 
   },
 
   enterScore10 : function() {
-
+    // Ici on veut savoir si on trouve une suite de 1,2,3,4,5 ou 2,3,4,5,6
+    // On parcourt une fois le tableau pour trouver un 2, 3, 4, 5 car commun sur les 2 suites possibles.
+    // Si pas ok, on met 0 dans le score.
+    // Si c'est ok, on cherche un 1. 
+    // Dans ce cas, suite ok, on met 40 dans le score.
+    // Si pas ok, on cherche un 6.
+    // Dans ce cas, suite ok, on met 40 dans le score.
+    // Si pas ok, on met 0 dans le score.
   },
 
   enterScore11 : function() {
@@ -451,7 +634,7 @@ var app = {
       app.resetDice();   
   
       inferiorScore.value += yamsScore;
-      inferiorScore.textContent = superiorScore.value;
+      inferiorScore.textContent = inferiorScore.value;
       app.finalScore(superiorScore, inferiorScore, bonus);
   },
 
@@ -503,13 +686,13 @@ var app = {
     app.resetDice();   
 
     inferiorScore.value += chanceScore;
-    inferiorScore.textContent = superiorScore.value;
+    inferiorScore.textContent = inferiorScore.value;
     app.finalScore(superiorScore, inferiorScore, bonus);
 
     },
 
   bonus : function(superiorScore, bonus) {
-    if (superiorScore.value >= 62) {
+    if (superiorScore.value >= 63) {
       bonus.value = 35;
       bonus.textContent = bonus.value;
     }
@@ -518,7 +701,12 @@ var app = {
   finalScore : function(superiorScore, inferiorScore, bonus) {
     finalScore.value = superiorScore.value + inferiorScore.value + bonus.value;
     finalScore.textContent = finalScore.value;
-  }
+  },
+
+  diceCount : function(array) {
+    
+
+}
 
 }
 
