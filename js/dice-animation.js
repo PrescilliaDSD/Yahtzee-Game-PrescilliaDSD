@@ -567,33 +567,203 @@ var app = {
     // Si c'est 3, on refait une autre boucle pour trouver 2 fois un autre chiffrE.
     // Si pas ok, on met 0 dans le score.     
     // Si ok, on met 25 dans le score.
+    var full = document.querySelectorAll('.all-dice');
+    var fullScore = 0;
+    var diceOne = 0;
+    var diceTwo = 0;
+    var diceThree = 0;
+    var diceFour = 0;
+    var diceFive = 0;
+    var diceSix = 0; 
+    for (var tdCount = 0; tdCount < full.length; tdCount += 1) {
+      if (full[tdCount].classList.contains('fa-dice-one')) {
+        diceOne += 1;
+      } else if (full[tdCount].classList.contains('fa-dice-two')) {
+        diceTwo += 1;
+      }
+      else if (full[tdCount].classList.contains('fa-dice-three')) {
+        diceThree += 1;
+      }
+      else if (full[tdCount].classList.contains('fa-dice-four')) {
+        diceFour += 1;
+      }
+      else if (full[tdCount].classList.contains('fa-dice-five')) {
+        diceFive += 1;
+      }
+      else if (full[tdCount].classList.contains('fa-dice-six')) {
+        diceSix += 1;
+      }
+    }
 
+    if (diceOne === 3 || diceTwo === 3 || diceThree === 3 || diceFour === 3 || diceFive === 3 || diceSix === 3 ) {
+      if (diceOne === 2 || diceTwo === 2 || diceThree === 2 || diceFour === 2 || diceFive === 2 || diceSix === 2 ) {
+        fullScore = 25;
+      }
+    }
+      
+  
+
+    var buttonRemove = document.querySelectorAll('.score-button')
+      var buttonParent = document.querySelectorAll('.score-td');
+      for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+      // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+      // Si pas de class empty, on laisse l'enfant en place. 
+        if (buttonParent[tdCounter].classList.contains('empty')) {
+          buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+        }
+        
+      }
+      var newP8 = document.createElement('p');
+      newP8.classList.add('already-fill-8');
+      newP8.classList.add('score-button');
+      newP8.value = fullScore;
+      newP8.textContent = newP8.value;
+      buttonParent[8].appendChild(newP8);
+  
+      buttonParent[8].classList.remove('empty');
+      // on reset les dés
+      app.resetDice();   
+  
+      inferiorScore.value += fullScore;
+      inferiorScore.textContent = inferiorScore.value;
+      app.finalScore(superiorScore, inferiorScore, bonus);
   
   },
 
   enterScore9 : function() {
-    // Ici on veut savoir si on trouve une suite 1,2,3,4 ou 2,3,4,5 ou 3,4,5,6
-    // On parcourt une fois le tableau pour trouver un 3 car commun sur les 3 suites possibles.
-    // Si c'est ok on parcourt pour trouver un 4 car commun aussi sur les 3 suites possibles.
-    // Si pas ok, on met 0 dans le score. 
-    // Si c'est ok on cherche un 1, puis un 2.
-    // Dans ce cas la suite est ok, on entre 30 dans le score.
-    // Si c'est pas ok pour le 1, on cherche un 2, puis un 5.
-    // Dans ce cas la suite est ok, on entre 30 dans le score.
-    // Si c'est pas ok pour le 2, on cherche un 5 puis un 6.
-    // Dans ce cas la suite est ok, on entre 30 dans le score. 
-    // Si c'est pas ok, on met 0 dans le score. 
+    var littleSuite = document.querySelectorAll('.all-dice');
+    var littleSuiteScore = 0;
+    var diceOne = 0;
+    var diceTwo = 0;
+    var diceThree = 0;
+    var diceFour = 0;
+    var diceFive = 0;
+    var diceSix = 0; 
+    
+    for (var tdCount = 0; tdCount < littleSuite.length; tdCount += 1) {
+      if (littleSuite[tdCount].classList.contains('fa-dice-one')) {
+        diceOne += 1;
+      } else if (littleSuite[tdCount].classList.contains('fa-dice-two')) {
+        diceTwo += 1;
+      }
+      else if (littleSuite[tdCount].classList.contains('fa-dice-three')) {
+        diceThree += 1;
+      }
+      else if (littleSuite[tdCount].classList.contains('fa-dice-four')) {
+        diceFour += 1;
+      }
+      else if (littleSuite[tdCount].classList.contains('fa-dice-five')) {
+        diceFive += 1;
+      }
+      else if (littleSuite[tdCount].classList.contains('fa-dice-six')) {
+        diceSix += 1;
+      }
+    }
+
+    if (diceThree > 0 && diceFour > 0) {
+      if (diceOne > 0 && diceTwo > 0) {
+        littleSuiteScore = 30;
+      }
+      else if (diceTwo > 0 && diceFive > 0) {
+        littleSuiteScore = 30;
+      }
+      else if (diceFive > 0 && diceSix > 0) {
+        littleSuiteScore = 30
+      }
+    }
+
+    var buttonRemove = document.querySelectorAll('.score-button')
+      var buttonParent = document.querySelectorAll('.score-td');
+      for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+      // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+      // Si pas de class empty, on laisse l'enfant en place. 
+        if (buttonParent[tdCounter].classList.contains('empty')) {
+          buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+        }
+        
+      }
+      var newP9 = document.createElement('p');
+      newP9.classList.add('already-fill-9');
+      newP9.classList.add('score-button');
+      newP9.value = littleSuiteScore;
+      newP9.textContent = newP9.value;
+      buttonParent[9].appendChild(newP9);
+  
+      buttonParent[9].classList.remove('empty');
+      // on reset les dés
+      app.resetDice();   
+  
+      inferiorScore.value += littleSuiteScore;
+      inferiorScore.textContent = inferiorScore.value;
+      app.finalScore(superiorScore, inferiorScore, bonus);
+
+      
   },
 
   enterScore10 : function() {
-    // Ici on veut savoir si on trouve une suite de 1,2,3,4,5 ou 2,3,4,5,6
-    // On parcourt une fois le tableau pour trouver un 2, 3, 4, 5 car commun sur les 2 suites possibles.
-    // Si pas ok, on met 0 dans le score.
-    // Si c'est ok, on cherche un 1. 
-    // Dans ce cas, suite ok, on met 40 dans le score.
-    // Si pas ok, on cherche un 6.
-    // Dans ce cas, suite ok, on met 40 dans le score.
-    // Si pas ok, on met 0 dans le score.
+    var largeSuite = document.querySelectorAll('.all-dice');
+    var largeSuiteScore = 0;
+    var diceOne = 0;
+    var diceTwo = 0;
+    var diceThree = 0;
+    var diceFour = 0;
+    var diceFive = 0;
+    var diceSix = 0; 
+    
+    for (var tdCount = 0; tdCount < largeSuite.length; tdCount += 1) {
+      if (largeSuite[tdCount].classList.contains('fa-dice-one')) {
+        diceOne += 1;
+      } else if (largeSuite[tdCount].classList.contains('fa-dice-two')) {
+        diceTwo += 1;
+      }
+      else if (largeSuite[tdCount].classList.contains('fa-dice-three')) {
+        diceThree += 1;
+      }
+      else if (largeSuite[tdCount].classList.contains('fa-dice-four')) {
+        diceFour += 1;
+      }
+      else if (largeSuite[tdCount].classList.contains('fa-dice-five')) {
+        diceFive += 1;
+      }
+      else if (largeSuite[tdCount].classList.contains('fa-dice-six')) {
+        diceSix += 1;
+      }
+    }
+
+    if (diceTwo > 0 && diceThree > 0 && diceFour > 0 && diceFive > 0) {
+      if (diceOne > 0) {
+        largeSuiteScore = 40;
+      }
+      else if (diceSix > 0) {
+        largeSuiteScore = 40;
+      }   
+    }
+
+    var buttonRemove = document.querySelectorAll('.score-button')
+      var buttonParent = document.querySelectorAll('.score-td');
+      for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
+      // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
+      // Si pas de class empty, on laisse l'enfant en place. 
+        if (buttonParent[tdCounter].classList.contains('empty')) {
+          buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
+        }
+        
+      }
+      var newP10 = document.createElement('p');
+      newP10.classList.add('already-fill-10');
+      newP10.classList.add('score-button');
+      newP10.value = largeSuiteScore;
+      newP10.textContent = newP10.value;
+      buttonParent[10].appendChild(newP10);
+  
+      buttonParent[10].classList.remove('empty');
+      // on reset les dés
+      app.resetDice();   
+  
+      inferiorScore.value += largeSuiteScore;
+      inferiorScore.textContent = inferiorScore.value;
+      app.finalScore(superiorScore, inferiorScore, bonus);
+
   },
 
   enterScore11 : function() {
@@ -702,11 +872,6 @@ var app = {
     finalScore.value = superiorScore.value + inferiorScore.value + bonus.value;
     finalScore.textContent = finalScore.value;
   },
-
-  diceCount : function(array) {
-    
-
-}
 
 }
 
