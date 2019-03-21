@@ -8,15 +8,6 @@ var app = {
   diceResult : function () {
     // Nous avons droit à 3 lancers. On incrémente donc le counter à chaque lancer de dé.
     counter += 1;
-    // ci-dessous un tableau contenant toutes les valeurs possibles des dés.
-      var dices = {
-        1: '<i class="all-dice fas fa-dice-one"></i>',
-        2: '<i class="all-dice fas fa-dice-two"></i>',
-        3: '<i class="all-dice fas fa-dice-three"></i>',    
-        4: '<i class="all-dice fas fa-dice-four"></i>',
-        5: '<i class="all-dice fas fa-dice-five"></i>',
-        6: '<i class="all-dice fas fa-dice-six"></i>',
-      }
 
       // on sélectionne dans le DOM les 5 dés qui vont être lancés.
       var dicesToThrow = document.querySelectorAll('.dice-button');
@@ -27,49 +18,60 @@ var app = {
           // Si l'entrée contient une class "selected", cela signifie que le dé a été bloqué, il ne faut donc pas le modifier.
           // Si le compteur a atteint 3, les 3 lancés autorisés ont été fait. On ne peut donc plus modifier les dés avant d'avoir noté son score. 
           if (dicesToThrow[index].classList.contains('selected') === false && counter < 3) {
-              // Les index du tableau dices allant de 1 a 6, on veut exclure le 0 du Math.random
               random = Math.floor(Math.random() * 7);
+              // Les index du tableau dices allant de 1 a 6, on veut exclure le 0 du Math.random
               if (random === 0) {
-                random = 1;
-                dicesToThrow[index].innerHTML = dices[random];
-              } else {
-                dicesToThrow[index].innerHTML = dices[random];
-              } 
+                random = 1; 
+              }
+              dicesToThrow[index].innerHTML = dices[random];
           }
       }
       
       // On peut cliquer sur chaque dé individuellement afin de bloquer son résultat
       for (var index = 0; index < dicesToThrow.length; index+= 1) {
-        (dicesToThrow[index]).addEventListener('click', app.diceBlock);
+          (dicesToThrow[index]).addEventListener('click', app.diceBlock);
       }
+
+      // Dès lors qu'on a lancé les dés au moins une fois, on peut noter notre résultat dans le tableau
+      if (counter === 1) {
+          // on sélectionne toutes les cases qui vont accueillir les scores
+          var scoreTd = document.querySelectorAll('.score-td');
+          var leftSpecific = 1;
+          for (var index = 0; index < scoreTd.length; index += 1) {
+              // Si la case est vide et ne contient pas encore de score, on va créer un bouton pour pouvoir insérer le score.
+              if (scoreTd[index].classList.contains('empty')) {
+                  // on créé l'élément bouton
+                  var tdButton = document.createElement('button');
+                  // on lui attribut les classes nécessaires
+                  tdButton.className += ('bg-transparent score-button ');
+
+                  if (index % 2 === 0 && index !== 12) {
+                      tdButton.className += ('left-score ');
+                      tdButton.className += ('left-score-' + leftSpecific);
+                      leftSpecific += 1;
+                      // on veut créer une fonction pour le score de la partie de gauche.
+                      tdButton.addEventListener('click', app.leftScore);
+                  } else {
+                    tdButton.className += ('right-score');
+                  }
+
+                  // on met à l'intérieur l'icône pour insérer le score.
+                  tdButton.innerHTML = '<i class="fas fa-arrow-alt-circle-down"></i>';
+
+                  // on déplace l'élément créé dans la case concernée.
+                  scoreTd[index].appendChild(tdButton);
+              }
+
+              tdButton.addEventListener('click', app.resetDices);
+          }
+      }
+
+      // une fonction pour le brelan, carré, yams et chance
+      // une fonction pour les suites
   },
 
   
-    
-  //   // On peut cliquer sur chaque dé individuellement afin de bloquer son résultat
-  //   dicesToThrow[0].addEventListener('click', app.diceBlock1);
-  //   dicesToThrow[1].addEventListener('click', app.diceBlock2);
-  //   dicesToThrow[2].addEventListener('click', app.diceBlock3);
-  //   dicesToThrow[3].addEventListener('click', app.diceBlock4);
-  //   dicesToThrow[4].addEventListener('click', app.diceBlock5);
-  //   };
-
-  // // On a le droit à trois lancers. On lance donc un compteur pour limiter l'utilisation de la fonction.
-  // counter += 1;
-
-  // // Dès lors qu'on a lancé les dés au moins une fois, on peut noter notre résultat dans le tableau
-  // if (counter === 1) {
-  // var scoreTd = document.querySelectorAll('.score-td');
-  //   for (tdCounter = 0; tdCounter < scoreTd.length; tdCounter += 1) {
-  //     if (scoreTd[tdCounter].classList.contains('empty')) {
-  //     var tdButton = document.createElement('button');
-  //     tdButton.className += ('bg-transparent ');
-  //     tdButton.className += ('score-button ');
-  //     tdButton.className += ('score-button-' + tdCounter)
-  //     tdButton.innerHTML = '<i class="fas fa-arrow-alt-circle-down"></i>';
-  //     scoreTd[tdCounter].appendChild(tdButton);
-  //     }
-  //   }
+ 
 
   //   if (document.querySelector('.score-button-0')) {
   //     document.querySelector('.score-button-0').addEventListener('click', app.enterScore0);
@@ -120,66 +122,35 @@ var app = {
     }
   },
 
-  // diceBlock2 : function() {
-  //   if (counter !== 0) {
-  //   var dice2 = document.querySelector('#dice2');
-  //   dice2.classList.toggle('selected');
-  //   dice2.classList.toggle('text-info');
-  //   }
-  // },
+  leftScore : function (event) {
+    console.log(event.currentTarget);
+  },
 
-  // diceBlock3 : function() {
-  //   if (counter !== 0) {
-  // var dice3 = document.querySelector('#dice3');
-  // dice3.classList.toggle('selected');
-  // dice3.classList.toggle('text-info');
-  //   }
-  // },
+  resetDices : function (event) {
+      // on sélectionne les cinq dés à reset
+      var dicesToReset = document.querySelectorAll('.dice-button');
+      // Pour chaque dé, on veut lui redonner sa valeur initiale qui correspond à une entrée du tableau dices.
+      for (var index = 0; index < dicesToReset.length; index += 1) {
+          dicesToReset[index].innerHTML = dices[index + 1];
+          dicesToReset[index].classList.remove('selected');
+          dicesToReset[index].classList.remove('text-info');
+      }
+      // on remet le compteur à 0 pour pouvoir recommencer un tour.
+      counter = 0;
 
-  // diceBlock4 : function() {
-  //   if (counter !== 0) {
-  // var dice4 = document.querySelector('#dice4');
-  // dice4.classList.toggle('selected');
-  // dice4.classList.toggle('text-info');
-  //   }
-  // },
+  // on souhaite retirer tous les boutons de score une fois qu'on a cliqué pour entrer un score.
+    // on sélectionne d'abord les td à vider.
+    var buttonToRemoveIn = document.querySelectorAll('.score-td');
+    // on sélectionne le bouton à supprimer
+    var buttonToRemove = document.querySelectorAll('.score-button');
+    // 
+    for (var index = 0; index < buttonToRemoveIn.length; index += 1) {
+        if (buttonToRemoveIn[index].classList.contains('empty')) {
+            buttonToRemoveIn[index].removeChild(buttonToRemove[index]);
+        }
+    }
+  },
 
-  // diceBlock5 : function() {
-  //   if (counter !== 0) {
-  // var dice5 = document.querySelector('#dice5');
-  // dice5.classList.toggle('selected');
-  // dice5.classList.toggle('text-info');
-  //   }
-  // },
-
-
-  // resetDice : function() {
-
-  //   var dice1 = document.querySelector('#dice1');
-  //   var dice2 = document.querySelector('#dice2');
-  //   var dice3 = document.querySelector('#dice3');
-  //   var dice4 = document.querySelector('#dice4');
-  //   var dice5 = document.querySelector('#dice5');
-
-  //   dice1.innerHTML = '<i class="all-dice fas fa-dice-one"></i>';
-  //   dice2.innerHTML = '<i class="all-dice fas fa-dice-two"></i>';
-  //   dice3.innerHTML = '<i class="all-dice fas fa-dice-three"></i>';
-  //   dice4.innerHTML = '<i class="all-dice fas fa-dice-four"></i>';
-  //   dice5.innerHTML = '<i class="all-dice fas fa-dice-five"></i>';
-
-  //   dice1.classList.remove('selected');
-  //   dice1.classList.remove('text-info');
-  //   dice2.classList.remove('selected');
-  //   dice2.classList.remove('text-info');
-  //   dice3.classList.remove('selected');
-  //   dice3.classList.remove('text-info');
-  //   dice4.classList.remove('selected');
-  //   dice4.classList.remove('text-info');
-  //   dice5.classList.remove('selected');
-  //   dice5.classList.remove('text-info');
-
-  //   counter = 0;
-  // },
 
   // enterScore0 : function() {   
   //   // on sélectionne tous les dés pour savoir combien il y a de "1".
@@ -192,14 +163,7 @@ var app = {
   //   }
   //   // Une fois qu'on a compté le nombre de "1", on veut faire disparaître les boutons.
 
-  //   var buttonRemove = document.querySelectorAll('.score-button')
-  //   var buttonParent = document.querySelectorAll('.score-td');
-  //   for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
-  //     if (buttonParent[tdCounter].classList.contains('empty')) {
-  //       buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
-  //     }
-  //   }
-  //   // Ensuite on souhaite faire apparaître la valeur de diceOne dans la case.
+    //   // Ensuite on souhaite faire apparaître la valeur de diceOne dans la case.
   //   var newP0 = document.createElement('p');
   //   newP0.classList.add('already-fill-0');
   //   newP0.classList.add('score-button');
@@ -901,6 +865,17 @@ var app = {
 
 // Lorsque la page a fini de charger, je veux lancer la fonction init
 document.addEventListener('DOMContentLoaded', app.init);
+
+// ci-dessous un tableau contenant toutes les valeurs possibles des dés.
+var dices = {
+  1: '<i class="all-dice fas fa-dice-one"></i>',
+  2: '<i class="all-dice fas fa-dice-two"></i>',
+  3: '<i class="all-dice fas fa-dice-three"></i>',    
+  4: '<i class="all-dice fas fa-dice-four"></i>',
+  5: '<i class="all-dice fas fa-dice-five"></i>',
+  6: '<i class="all-dice fas fa-dice-six"></i>',
+}
+
 // initialiser un compteur pour le nombre de lancers
 var counter = 0;
 
