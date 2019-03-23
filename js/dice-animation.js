@@ -54,6 +54,8 @@ var app = {
                 tdButton.addEventListener('click', app.full);
               } else if (index === 9 || index === 10) {
                 tdButton.addEventListener('click', app.suite);
+              } else if (index === 12) {
+                tdButton.addEventListener('click', app.chance);
               }
             }
             // on met à l'intérieur l'icône pour insérer le score.
@@ -258,6 +260,7 @@ var app = {
   },
 
   suite : function() {
+    // on veut  4 ou 5 dés qui se suivent. 
     var dicesResult = 0;
     var resultArray = [];
     var dicesThrowed = document.querySelectorAll('.all-dice');
@@ -279,23 +282,27 @@ var app = {
       }
       prev = resultArray[index];
     }
-    console.log(a);
     var suiteScore = 0;
     var aNumber;
+    // Pour chaque entrée de a, on transforme la string en nombre pour pouvoir la manipuler.
     for (var index = 0; index < a.length - 1; index += 1) {
       aNumber = parseInt(a[index]);
+      // si en ajoutant 1 à la première entrée, on obtient le même nombre qu'à la deuxième entrée, cela signifie que les deux entrés se suivent.
       if((aNumber + 1) == (a[index + 1])) {
-        console.log('test');
+        // dans ce cas on augmente un compteur pour signifier qu'on commence une suite.
         suiteScore += 1;
+        // si ce compteur arrive à 4, soit 5 dés qui se suivent, et qu'on a sélectionné la grande suite, on gagne 40 points.
         if (suiteScore === 4 && event.currentTarget.classList.contains('right-side-button-10')) {
           dicesResult = 40;
         }
+        // si ce compteur arrive à 3, soit 4 dés qui se suivent, et qu'on a sélectionné la petite suite, on gagne 30 points.
         else if (suiteScore === 3 && event.currentTarget.classList.contains('right-side-button-9')) {
           dicesResult = 30;
           break;
         }
+        // si les deux entrées ne se suivent pas, on remet le compteur à 0 car la suite est brisée.
       } else {
-        dicesResult = 0;
+        suiteScore = 0;
       }
     }
     var newElement = document.createElement('p');
@@ -315,59 +322,38 @@ var app = {
       app.finalScore(leftScore, rightScore);
   },
 
-//   // enterScore12 : function() {
-//   //   var chanceScore = 0;
-//   //   // on sélectionne tous les dés de résultats
-//   //   var chance = document.querySelectorAll('.all-dice');
-//   //   // on additionne toutes les valeurs
-//   //   for (var counter = 0; counter < chance.length; counter += 1) {
-//   //     if (chance[counter].classList.contains('fa-dice-one')) {
-//   //       chanceScore += 1;
-//   //     }
-//   //     else if (chance[counter].classList.contains('fa-dice-two')) {
-//   //       chanceScore += 2;
-//   //     }
-//   //     else if (chance[counter].classList.contains('fa-dice-three')) {
-//   //       chanceScore += 3;
-//   //     }
-//   //     else if (chance[counter].classList.contains('fa-dice-four')) {
-//   //       chanceScore += 4;
-//   //     }
-//   //     else if (chance[counter].classList.contains('fa-dice-five')) {
-//   //       chanceScore += 5;
-//   //     }
-//   //     else if (chance[counter].classList.contains('fa-dice-six')) {
-//   //       chanceScore += 6;
-//   //     }
-//   //   }
-      
-//   //   var buttonRemove = document.querySelectorAll('.score-button')
-//   //   var buttonParent = document.querySelectorAll('.score-td');
-//   //   for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
-//   //   // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
-//   //   // Si pas de class empty, on laisse l'enfant en place. 
-//   //     if (buttonParent[tdCounter].classList.contains('empty')) {
-//   //       buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
-//   //     }
-      
-//   //   }
-//   //   var newP12 = document.createElement('p');
-//   //   newP12.classList.add('already-fill-12');
-//   //   newP12.classList.add('score-button');
-//   //   newP12.value = chanceScore;
-//   //   newP12.textContent = newP12.value;
-//   //   buttonParent[12].appendChild(newP12);
+  chance : function() {
+    // on additionne simplement les 5 dés.
+    var dicesResult = 0;
+    var resultArray = [];
+    var dicesThrowed = document.querySelectorAll('.all-dice');
+    for (var index = 0; index < dicesThrowed.length; index += 1) {
+      for (var index2 in dices) {
+        if (dicesThrowed[index].outerHTML == dices[index2]) {
+          resultArray.push(index2); 
+        }
+      }
+    }
+    
+    for (var index = 0; index < resultArray.length; index += 1) {
+      dicesResult += parseInt(resultArray[index]);
+    }
+    var newElement = document.createElement('p');
+      newElement.value = dicesResult;
+      newElement.classList.add('score-button');
+      newElement.classList.add('filled');
+      newElement.textContent = newElement.value;
+      ((event.currentTarget).parentNode).classList.remove('empty');
+      (event.currentTarget).replaceWith(newElement);
 
-//   //   buttonParent[12].classList.remove('empty');
-//   //   // on reset les dés
-//   //   app.resetDice();   
+      app.resetDices();
 
-//   //   inferiorScore.value += chanceScore;
-//   //   inferiorScore.textContent = inferiorScore.value;
-//   //   app.finalScore(superiorScore, inferiorScore, bonus);
-
-//   //   },
-
+      // On rajoute le score au total de la partie de droite.
+      rightScore.value += dicesResult;
+      rightScore.textContent = rightScore.value;
+      // on fait le total de tous les points dans la partie "total".
+      app.finalScore(leftScore, rightScore);
+  },
 
   bonus : function(leftScore, bonus) {
   // le bonus est validé si le score de la partie de gauche atteint ou dépasse 63.
