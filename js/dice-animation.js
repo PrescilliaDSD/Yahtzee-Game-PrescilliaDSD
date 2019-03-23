@@ -49,7 +49,7 @@ var app = {
               scoreTd[index].className += ('right-side ');
               tdButton.className += ('right-side-button-' + index)
               if (index === 6 || index === 7 || index === 11) {
-                tdButton.addEventListener('click', app.tripsSquareYams);
+                tdButton.addEventListener('click', app.tripsSquareYahtzee);
               } else if (index === 8) {
                 tdButton.addEventListener('click', app.full);
               }
@@ -151,8 +151,8 @@ var app = {
     }
   },
 
-  tripsSquareYams : function(event) {
-    // fonction pour le brelan, carré et yams.
+  tripsSquareYahtzee : function(event) {
+    // fonction pour le brelan, carré et Yahtzee.
     var dicesResult = 0;
     var resultArray = [];
     var dicesThrowed = document.querySelectorAll('.all-dice');
@@ -176,7 +176,7 @@ var app = {
     }
     // après avoir trié les résultats des dés, on vérifie : 
     for (var index = 0; index < b.length; index += 1) {
-      // si on a cinq fois le même dé et qu'on clique sur le score yams, on obtient 50 points.
+      // si on a cinq fois le même dé et qu'on clique sur le score Yahtzee, on obtient 50 points.
       if (b[index] === 5 && event.currentTarget.classList.contains('right-side-button-11')) {
           dicesResult = 50;
       // si on a au moins quatre fois le même dé et qu'on clique sur le score carré, on obtient comme score la somme des cinq dés. 

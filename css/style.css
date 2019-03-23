@@ -31,13 +31,13 @@ i.fa-arrow-alt-circle-down{
         font-size: 2em;
     }
 
-    .yams-title {
+    .yahtzee-title {
         font-size: 5em;
     }
 }
 
 @media screen and (max-width: 640px) {
-    .yams-title {
+    .yahtzee-title {
         font-size: 3em;
     }
 
@@ -47,7 +47,7 @@ i.fa-arrow-alt-circle-down{
 }
 
 @media screen and (max-width: 420px) {
-    .yams-title {
+    .yahtzee-title {
         font-size: 2em;
     }
 
