@@ -46,7 +46,11 @@ var app = {
               // on veut créer une fonction pour le score de la partie de gauche.
               tdButton.addEventListener('click', app.leftScore);
             } else {
-              scoreTd[index].className += ('right-side');
+              scoreTd[index].className += ('right-side ');
+              tdButton.className += ('right-side-button-' + index)
+              if (index === 6 || index === 7 || index === 11) {
+                tdButton.addEventListener('click', app.tripsSquareYams);
+              }
             }
             // on met à l'intérieur l'icône pour insérer le score.
             tdButton.innerHTML = '<i class="fas fa-arrow-alt-circle-down"></i>';
@@ -58,52 +62,9 @@ var app = {
       
   },
 
-//       // une fonction pour le brelan, carré, yams et chance
+//       // une fonction  chance
+
 //       // une fonction pour les suites
-
-  
- 
-
-//   //   if (document.querySelector('.score-button-0')) {
-//   //     document.querySelector('.score-button-0').addEventListener('click', app.enterScore0);
-//   //   }
-//   //   if (document.querySelector('.score-button-1')) {
-//   //     document.querySelector('.score-button-1').addEventListener('click', app.enterScore1);
-//   //   }
-//   //   if (document.querySelector('.score-button-2')) {
-//   //     document.querySelector('.score-button-2').addEventListener('click', app.enterScore2);
-//   //   }
-//   //   if (document.querySelector('.score-button-3')) {
-//   //     document.querySelector('.score-button-3').addEventListener('click', app.enterScore3);
-//   //   }
-//   //   if (document.querySelector('.score-button-4')) {
-//   //     document.querySelector('.score-button-4').addEventListener('click', app.enterScore4);
-//   //   }
-//   //   if (document.querySelector('.score-button-5')) {
-//   //     document.querySelector('.score-button-5').addEventListener('click', app.enterScore5);
-//   //   }
-//   //   if (document.querySelector('.score-button-6')) {
-//   //     document.querySelector('.score-button-6').addEventListener('click', app.enterScore6);
-//   //   }
-//   //   if (document.querySelector('.score-button-7')) {
-//   //     document.querySelector('.score-button-7').addEventListener('click', app.enterScore7);
-//   //   }
-//   //   if (document.querySelector('.score-button-8')) {
-//   //     document.querySelector('.score-button-8').addEventListener('click', app.enterScore8);
-//   //   }
-//   //   if (document.querySelector('.score-button-9')) {
-//   //     document.querySelector('.score-button-9').addEventListener('click', app.enterScore9);
-//   //   }
-//   //   if (document.querySelector('.score-button-10')) {
-//   //     document.querySelector('.score-button-10').addEventListener('click', app.enterScore10);
-//   //   }
-//   //   if (document.querySelector('.score-button-11')) {
-//   //     document.querySelector('.score-button-11').addEventListener('click', app.enterScore11);
-//   //   }
-//   //   if (document.querySelector('.score-button-12')) {
-//   //     document.querySelector('.score-button-12').addEventListener('click', app.enterScore12);
-//   //   }
-//   // }
 
   diceBlock : function(event) {
     var diceToBlock = event.currentTarget;
@@ -141,7 +102,7 @@ var app = {
       if ((event.currentTarget).classList.contains('left-side-button-' + index)) {
         for (var index2 = 0; index2 < a.length; index2 += 1) {
           if (a[index2] == (index + 1)) {
-            var dicesResult = a[index2] * b[index2];
+            dicesResult = a[index2] * b[index2];
           }
         } 
       }
@@ -188,174 +149,63 @@ var app = {
     }
  },
 
+ tripsSquareYams : function(event) {
+  // fonction pour le brelan, carré et yams.
+  var dicesResult = 0;
+  var resultArray = [];
+  var dicesThrowed = document.querySelectorAll('.all-dice');
+  for (var index = 0; index < dicesThrowed.length; index += 1) {
+    for (var index2 in dices) {
+      if (dicesThrowed[index].outerHTML == dices[index2]) {
+        resultArray.push(index2); 
+      }
+    }
+  }
+  resultArray.sort();
+  var a = []; var b = []; var prev;
+  for ( var index = 0; index < resultArray.length; index += 1) {
+    if ( resultArray[index] !== prev ) {
+      a.push(resultArray[index]);
+      b.push(1);
+    } else {
+      b[b.length-1]++;
+    }
+    prev = resultArray[index];
+  }
+  // après avoir trié les résultats des dés, on vérifie : 
+  for (var index = 0; index < b.length; index += 1) {
+    // si on a cinq fois le même dé et qu'on clique sur le score yams, on obtient 50 points.
+    if (b[index] === 5 && event.currentTarget.classList.contains('right-side-button-11')) {
+        dicesResult = 50;
+    // si on a au moins quatre fois le même dé et qu'on clique sur le score carré, on obtient comme score la somme des cinq dés. 
+    } else if (b[index] >= 4 && event.currentTarget.classList.contains('right-side-button-7')) {
+        for (var index2 = 0; index2 < a.length; index2 += 1) {
+          dicesResult += a[index2] * b[index2];
+        } 
+    // si on a au moins trois fois le même dé et qu'on clique sur le score brelan, on obtient comme score la somme des cinq dés. 
+    } else if (b[index] >= 3 && event.currentTarget.classList.contains('right-side-button-6')) {
+      for (var index2 = 0; index2 < a.length; index2 += 1) {
+        dicesResult += a[index2] * b[index2];
+      }
+    }
+  }
+  var newElement = document.createElement('p');
+    newElement.value = dicesResult;
+    newElement.classList.add('score-button');
+    newElement.classList.add('filled');
+    newElement.textContent = newElement.value;
+    ((event.currentTarget).parentNode).classList.remove('empty');
+    (event.currentTarget).replaceWith(newElement);
 
-//   // enterScore6 : function() {
-//   //   // en prenant chaque valeur possible de dés, on va parcourir le tableau pour savoir combien de fois ils apparaissent.
-//   //   // On parcourt pour voir combien il y a de one, de two, etc...
-//   //   // Si on trouve trois fois ou plus la même occurrence, on arrête.
-//   //   // On entre alors le score dans brelan, total des 5 dés.
-//   //   // Si a la fin on a pas trouvé au minimum 3 fois la même occurrence, on met un 0 pour le score.
-//   //   var trio = document.querySelectorAll('.all-dice');
-//   //   var trioScore = 0;
-//   //   var diceOne = 0;
-//   //   var diceTwo = 0;
-//   //   var diceThree = 0;
-//   //   var diceFour = 0;
-//   //   var diceFive = 0;
-//   //   var diceSix = 0; 
-//   //   for (var tdCount = 0; tdCount < trio.length; tdCount += 1) {
-//   //     if (trio[tdCount].classList.contains('fa-dice-one')) {
-//   //       diceOne += 1;
-//   //     } else if (trio[tdCount].classList.contains('fa-dice-two')) {
-//   //       diceTwo += 1;
-//   //     }
-//   //     else if (trio[tdCount].classList.contains('fa-dice-three')) {
-//   //       diceThree += 1;
-//   //     }
-//   //     else if (trio[tdCount].classList.contains('fa-dice-four')) {
-//   //       diceFour += 1;
-//   //     }
-//   //     else if (trio[tdCount].classList.contains('fa-dice-five')) {
-//   //       diceFive += 1;
-//   //     }
-//   //     else if (trio[tdCount].classList.contains('fa-dice-six')) {
-//   //       diceSix += 1;
-//   //     }
-//   //   }
+    app.resetDices();
 
-//   //   if (diceOne >= 3 || diceTwo >= 3 || diceThree >= 3 || diceFour >= 3 || diceFive >= 3 || diceSix >= 3 ) {
-//   //     for (var counter = 0; counter < trio.length; counter += 1) {
-//   //       if (trio[counter].classList.contains('fa-dice-one')) {
-//   //         trioScore += 1;
-//   //       }
-//   //       else if (trio[counter].classList.contains('fa-dice-two')) {
-//   //         trioScore += 2;
-//   //       }
-//   //       else if (trio[counter].classList.contains('fa-dice-three')) {
-//   //         trioScore += 3;
-//   //       }
-//   //       else if (trio[counter].classList.contains('fa-dice-four')) {
-//   //         trioScore += 4;
-//   //       }
-//   //       else if (trio[counter].classList.contains('fa-dice-five')) {
-//   //         trioScore += 5;
-//   //       }
-//   //       else if (trio[counter].classList.contains('fa-dice-six')) {
-//   //         trioScore += 6;
-//   //       }
-//   //     }
-//   //   }
+    // On rajoute le score au total de la partie de droite.
+    rightScore.value += dicesResult;
+    rightScore.textContent = rightScore.value;
+    // on fait le total de tous les points dans la partie "total".
+    app.finalScore(leftScore, rightScore);
+ },
 
-//   //   var buttonRemove = document.querySelectorAll('.score-button')
-//   //     var buttonParent = document.querySelectorAll('.score-td');
-//   //     for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
-//   //     // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
-//   //     // Si pas de class empty, on laisse l'enfant en place. 
-//   //       if (buttonParent[tdCounter].classList.contains('empty')) {
-//   //         buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
-//   //       }
-        
-//   //     }
-//   //     var newP6 = document.createElement('p');
-//   //     newP6.classList.add('already-fill-6');
-//   //     newP6.classList.add('score-button');
-//   //     newP6.value = trioScore;
-//   //     newP6.textContent = newP6.value;
-//   //     buttonParent[6].appendChild(newP6);
-  
-//   //     buttonParent[6].classList.remove('empty');
-//   //     // on reset les dés
-//   //     app.resetDice();   
-  
-//   //     inferiorScore.value += trioScore;
-//   //     inferiorScore.textContent = inferiorScore.value;
-//   //     app.finalScore(superiorScore, inferiorScore, bonus);
-  
-
-//   // },
-
-//   // enterScore7 : function() {
-//   //   // en prenant chaque valeur possible de dés, on va parcourir le tableau pour savoir combien de fois ils apparaissent.
-//   //   // On parcourt pour voir combien il y a de one, de two, etc...
-//   //   // Si on trouve quatre fois ou plus la même occurrence, on arrête.
-//   //   // On entre alors le score dans carré, total des 5 dés.
-//   //   // Si a la fin on a pas trouvé au minimum 4 fois la même occurrence, on met un 0 pour le score.
-//   //   var quadra = document.querySelectorAll('.all-dice');
-//   //   var quadraScore = 0;
-//   //   var diceOne = 0;
-//   //   var diceTwo = 0;
-//   //   var diceThree = 0;
-//   //   var diceFour = 0;
-//   //   var diceFive = 0;
-//   //   var diceSix = 0; 
-//   //   for (var tdCount = 0; tdCount < quadra.length; tdCount += 1) {
-//   //     if (quadra[tdCount].classList.contains('fa-dice-one')) {
-//   //       diceOne += 1;
-//   //     } else if (quadra[tdCount].classList.contains('fa-dice-two')) {
-//   //       diceTwo += 1;
-//   //     }
-//   //     else if (quadra[tdCount].classList.contains('fa-dice-three')) {
-//   //       diceThree += 1;
-//   //     }
-//   //     else if (quadra[tdCount].classList.contains('fa-dice-four')) {
-//   //       diceFour += 1;
-//   //     }
-//   //     else if (quadra[tdCount].classList.contains('fa-dice-five')) {
-//   //       diceFive += 1;
-//   //     }
-//   //     else if (quadra[tdCount].classList.contains('fa-dice-six')) {
-//   //       diceSix += 1;
-//   //     }
-//   //   }
-
-//   //   if (diceOne >= 4 || diceTwo >= 4 || diceThree >= 4 || diceFour >= 4 || diceFive >= 4 || diceSix >= 4 ) {
-//   //     for (var counter = 0; counter < quadra.length; counter += 1) {
-//   //       if (quadra[counter].classList.contains('fa-dice-one')) {
-//   //         quadraScore += 1;
-//   //       }
-//   //       else if (quadra[counter].classList.contains('fa-dice-two')) {
-//   //         quadraScore += 2;
-//   //       }
-//   //       else if (quadra[counter].classList.contains('fa-dice-three')) {
-//   //         quadraScore += 3;
-//   //       }
-//   //       else if (quadra[counter].classList.contains('fa-dice-four')) {
-//   //         quadraScore += 4;
-//   //       }
-//   //       else if (quadra[counter].classList.contains('fa-dice-five')) {
-//   //         quadraScore += 5;
-//   //       }
-//   //       else if (quadra[counter].classList.contains('fa-dice-six')) {
-//   //         quadraScore += 6;
-//   //       }
-//   //     }
-//   //   }
-
-//   //   var buttonRemove = document.querySelectorAll('.score-button')
-//   //     var buttonParent = document.querySelectorAll('.score-td');
-//   //     for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
-//   //     // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
-//   //     // Si pas de class empty, on laisse l'enfant en place. 
-//   //       if (buttonParent[tdCounter].classList.contains('empty')) {
-//   //         buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
-//   //       }
-        
-//   //     }
-//   //     var newP7 = document.createElement('p');
-//   //     newP7.classList.add('already-fill-7');
-//   //     newP7.classList.add('score-button');
-//   //     newP7.value = quadraScore;
-//   //     newP7.textContent = newP7.value;
-//   //     buttonParent[7].appendChild(newP7);
-  
-//   //     buttonParent[7].classList.remove('empty');
-//   //     // on reset les dés
-//   //     app.resetDice();   
-  
-//   //     inferiorScore.value += quadraScore;
-//   //     inferiorScore.textContent = inferiorScore.value;
-//   //     app.finalScore(superiorScore, inferiorScore, bonus);
-//   // },
 
 //   // enterScore8 : function() {
 //   //   // Ici on cherche à avoir 2 fois le même dé puis 3 fois le même dé.
@@ -562,48 +412,6 @@ var app = {
 
 //   // },
 
-//   // enterScore11 : function() {
-//   //   var yamsValue = 0;
-//   //   var yamsScore = 0;
-//   //   var yams = document.querySelectorAll('.all-dice');
-//   //   for (var counter = 0; counter < yams.length - 1; counter += 1) {
-//   //     if ((yams[counter].outerHTML == yams[counter + 1].outerHTML) === true ) {
-//   //       yamsValue += 1;
-//   //     } else {
-//   //       yamsValue = 0;
-//   //     }
-//   //   }
-//   //   if (yamsValue === 4) {
-//   //      yamsScore = 50;
-//   //     }
-
-
-//   //     var buttonRemove = document.querySelectorAll('.score-button')
-//   //     var buttonParent = document.querySelectorAll('.score-td');
-//   //     for (var tdCounter = 0; tdCounter < buttonParent.length; tdCounter += 1) {
-//   //     // Pour enlever un bouton, on vérifie que le parent contient bien la class empty, et si c'est le cas, on supprime l'enfant.
-//   //     // Si pas de class empty, on laisse l'enfant en place. 
-//   //       if (buttonParent[tdCounter].classList.contains('empty')) {
-//   //         buttonParent[tdCounter].removeChild(buttonRemove[tdCounter]);
-//   //       }
-        
-//   //     }
-//   //     var newP11 = document.createElement('p');
-//   //     newP11.classList.add('already-fill-11');
-//   //     newP11.classList.add('score-button');
-//   //     newP11.value = yamsScore;
-//   //     newP11.textContent = newP11.value;
-//   //     buttonParent[11].appendChild(newP11);
-  
-//   //     buttonParent[11].classList.remove('empty');
-//   //     // on reset les dés
-//   //     app.resetDice();   
-  
-//   //     inferiorScore.value += yamsScore;
-//   //     inferiorScore.textContent = inferiorScore.value;
-//   //     app.finalScore(superiorScore, inferiorScore, bonus);
-//   // },
-
 //   // enterScore12 : function() {
 //   //   var chanceScore = 0;
 //   //   // on sélectionne tous les dés de résultats
@@ -656,6 +464,7 @@ var app = {
 //   //   app.finalScore(superiorScore, inferiorScore, bonus);
 
 //   //   },
+
 
   bonus : function(leftScore, bonus) {
   // le bonus est validé si le score de la partie de gauche atteint ou dépasse 63.
