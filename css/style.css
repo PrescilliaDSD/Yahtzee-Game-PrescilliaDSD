@@ -7,6 +7,9 @@
     font-size: 2em;
 }
 
+.score-box {
+    height: 80px;
+}
 i.fa-arrow-alt-circle-down{
     font-size: 1.5em;
 }
