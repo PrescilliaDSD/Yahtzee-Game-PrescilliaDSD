@@ -3,6 +3,11 @@
     font-size: 1.5em;
 }
 
+a {
+    text-transform : uppercase;
+    letter-spacing: 2px;
+}
+
 table {
     border: 1px solid lightgrey;
 }
@@ -34,27 +39,15 @@ i.fa-arrow-alt-circle-down{
     .dice-div, .throw-dice {
         font-size: 2em;
     }
-
-    .yahtzee-title {
-        font-size: 5em;
-    }
 }
 
 @media screen and (max-width: 640px) {
-    .yahtzee-title {
-        font-size: 3em;
-    }
-
     .throw-dice, .dice-div {
         font-size: 1.5em;
     }
 }
 
 @media screen and (max-width: 420px) {
-    .yahtzee-title {
-        font-size: 2em;
-    }
-
     .throw-dice, .dice-div {
         font-size: 1em;
     }

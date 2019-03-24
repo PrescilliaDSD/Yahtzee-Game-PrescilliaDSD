@@ -2,7 +2,7 @@ var app = {
   init : function () {
     var diceButton = document.querySelector('.throw-dice');
     // quand on clique sur le bouton "lancer les dés", on applique la fonction throwingDices
-    diceButton.addEventListener('click', app.throwingDices);   
+    diceButton.addEventListener('click', app.throwingDices);
   },
 
   throwingDices : function () {
@@ -388,6 +388,7 @@ var dices = {
   6: '<i class="all-dice fas fa-dice-six"></i>',
 }
 
+var startGame = 0;
 // initialiser un compteur pour le nombre de lancers
 var counter = 0;
 
