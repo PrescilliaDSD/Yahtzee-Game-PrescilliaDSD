@@ -3,11 +3,18 @@
     font-size: 1.5em;
 }
 
-a {
+a, .yahtzee-title {
     text-transform : uppercase;
     letter-spacing: 2px;
 }
 
+.yahtzee-title:hover {
+    font-weight: bold;
+}
+
+.rules {
+    font-size: 0.7em;
+}
 table {
     border: 1px solid lightgrey;
 }

@@ -3,6 +3,13 @@ var app = {
     var diceButton = document.querySelector('.throw-dice');
     // quand on clique sur le bouton "lancer les dés", on applique la fonction throwingDices
     diceButton.addEventListener('click', app.throwingDices);
+    // règles du Yahtzee
+    var yahtzeeRules = document.querySelector('.yahtzee-title');
+    yahtzeeRules.addEventListener('click', app.rules);
+  },
+
+  rules : function() {
+    yRules.classList.toggle('d-none');
   },
 
   throwingDices : function () {
@@ -398,12 +405,12 @@ var dices = {
   5: '<i class="all-dice fas fa-dice-five"></i>',
   6: '<i class="all-dice fas fa-dice-six"></i>',
 }
-
-var startGame = 0;
 // initialiser un compteur pour le nombre de lancers
 var counter = 0;
 var throwLeft;
 var throwLeftP;
+// on sélectionne les règles du Yahtzee
+var yRules = document.querySelector('.rules');
 // préparer la somme des totaux et le bonus
 // bonus
 var bonus = document.querySelector('.bonus');
