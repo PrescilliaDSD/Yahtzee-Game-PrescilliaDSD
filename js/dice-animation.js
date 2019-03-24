@@ -8,6 +8,16 @@ var app = {
   throwingDices : function () {
     // Nous avons droit à 3 lancers. On incrémente donc le counter à chaque lancer de dé.
     counter += 1;
+    // On change le nombre de lancers restants.
+    throwLeft = document.querySelector('.throw-left');
+    throwLeftP = document.querySelector('.throw-left-p');
+    if (counter <= 3) {
+      if (counter === 3) {
+        throwLeftP.textContent = "Entrez votre résultat.";
+      } else {
+        throwLeft.textContent = 3 - counter;
+      }
+    }
     // on sélectionne dans le DOM les 5 dés qui vont être lancés.
     var dicesToThrow = document.querySelectorAll('.dice-button');
     // on créé la variable random qui va servir à changer la valeur des dés.
@@ -122,7 +132,6 @@ var app = {
     (event.currentTarget).replaceWith(newElement);
 
     app.resetDices();
-
     // On rajoute le score au total de la partie de gauche.
     leftScore.value += dicesResult;
     leftScore.textContent = leftScore.value;
@@ -133,6 +142,8 @@ var app = {
   },
 
   resetDices : function (event) {
+    // on reset le nombre de lancer de dés.
+    throwLeftP.innerHTML = "Nombre de lancers restants : <span class=\"throw-left\">3</span>";
     // on sélectionne les cinq dés à reset
     var dicesToReset = document.querySelectorAll('.dice-button');
     // Pour chaque dé, on veut lui redonner sa valeur initiale qui correspond à une entrée du tableau dices.
@@ -391,7 +402,8 @@ var dices = {
 var startGame = 0;
 // initialiser un compteur pour le nombre de lancers
 var counter = 0;
-
+var throwLeft;
+var throwLeftP;
 // préparer la somme des totaux et le bonus
 // bonus
 var bonus = document.querySelector('.bonus');
