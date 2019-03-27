@@ -94,6 +94,7 @@ var app = {
       if (counter !== 0) {
         diceToBlock.classList.toggle('selected');    
         diceToBlock.classList.toggle('text-info'); 
+        diceToBlock.classList.toggle('fa-spin');
       }
   },
 
@@ -158,6 +159,7 @@ var app = {
       dicesToReset[index].innerHTML = dices[index + 1];
       dicesToReset[index].classList.remove('selected');
       dicesToReset[index].classList.remove('text-info');
+      dicesToReset[index].classList.add('fa-spin');
     }
     // on remet le compteur à 0 pour pouvoir recommencer un tour.
     counter = 0;
@@ -254,9 +256,11 @@ var app = {
       }
       prev = resultArray[index];
     }
+    console.log(a);
+    console.log(b);
     // On regarde la longueur du tableau b. Pour un full, la longueur sera obligatoirement de 2.
     // Si cette condition est ok, on vérifie que le premier index vaut soit 2 (auquel cas le deuxième vaut forcément 3); ou 3 (auquel cas le deuxième index vaut forcément 2).
-    if (b.length === 2 && (b[0] === 2 || b[0] === 3)) {
+    if (b.length === 1 || (b.length === 2 && (b[0] === 2 || b[0] === 3))) {
         dicesResult = 25;
     }
   
