@@ -6,6 +6,11 @@ var app = {
     // règles du Yahtzee
     var yahtzeeRules = document.querySelector('.yahtzee-title');
     yahtzeeRules.addEventListener('click', app.rules);
+
+    var record = document.querySelector('.record');
+    record.value = localStorage.getItem('record');
+    record.textContent = record.value;
+
   },
 
   rules : function() {
@@ -146,6 +151,11 @@ var app = {
     app.bonus(leftScore, bonus);
     // on fait le total de tous les points dans la partie "total".
     app.finalScore(leftScore, rightScore);
+
+    if (document.querySelectorAll('.empty').length === 0) {
+      app.endGame();
+    }
+
   },
 
   resetDices : function (event) {
@@ -228,6 +238,10 @@ var app = {
       rightScore.textContent = rightScore.value;
       // on fait le total de tous les points dans la partie "total".
       app.finalScore(leftScore, rightScore);
+
+      if (document.querySelectorAll('.empty').length === 0) {
+        app.endGame();
+      }
   },
 
   full : function(event) {
@@ -254,8 +268,6 @@ var app = {
       }
       prev = resultArray[index];
     }
-    console.log(a);
-    console.log(b);
     // On regarde la longueur du tableau b. Pour un full, la longueur sera obligatoirement de 2.
     // Si cette condition est ok, on vérifie que le premier index vaut soit 2 (auquel cas le deuxième vaut forcément 3); ou 3 (auquel cas le deuxième index vaut forcément 2).
     if (b.length === 1 || (b.length === 2 && (b[0] === 2 || b[0] === 3))) {
@@ -277,6 +289,10 @@ var app = {
       rightScore.textContent = rightScore.value;
       // on fait le total de tous les points dans la partie "total".
       app.finalScore(leftScore, rightScore);
+
+      if (document.querySelectorAll('.empty').length === 0) {
+        app.endGame();
+      }
   },
 
   suite : function() {
@@ -340,6 +356,10 @@ var app = {
       rightScore.textContent = rightScore.value;
       // on fait le total de tous les points dans la partie "total".
       app.finalScore(leftScore, rightScore);
+
+      if (document.querySelectorAll('.empty').length === 0) {
+        app.endGame();
+      }
   },
 
   chance : function() {
@@ -373,6 +393,10 @@ var app = {
       rightScore.textContent = rightScore.value;
       // on fait le total de tous les points dans la partie "total".
       app.finalScore(leftScore, rightScore);
+
+      if (document.querySelectorAll('.empty').length === 0) {
+        app.endGame();
+      }
   },
 
   bonus : function(leftScore, bonus) {
@@ -391,6 +415,28 @@ var app = {
     finalScore.value = leftScore.value + rightScore.value;
     finalScore.textContent = finalScore.value;
   },
+
+  endGame : function() {
+    var end = document.querySelector('.end');
+    var playButton = document.querySelector('.play--again');
+    end.textContent = 'Score final : ' + finalScore.value;
+
+    var play = document.querySelector('.play--again');
+    play.classList.remove('d-none');
+    play.addEventListener('click', app.redirect);
+
+
+    var record = document.querySelector('.record');
+    if (finalScore.value > record.textContent) {
+      localStorage.setItem('record', finalScore.value);
+      record.value = localStorage.getItem('record');
+      record.textContent = record.value;
+    }
+  },
+
+  redirect: function() {
+      document.location.reload(true);
+  }
 
 }
 
