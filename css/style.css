@@ -3,7 +3,11 @@
     font-size: 1.5em;
 }
 
-a, .yahtzee-title {
+.github {
+    font-size: 1.5em;
+}
+
+a, .yahtzee-title, .github {
     text-transform : uppercase;
     letter-spacing: 2px;
 }
