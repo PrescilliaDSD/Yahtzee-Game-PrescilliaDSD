@@ -94,7 +94,6 @@ var app = {
       if (counter !== 0) {
         diceToBlock.classList.toggle('selected');    
         diceToBlock.classList.toggle('text-info'); 
-        diceToBlock.classList.toggle('fa-spin');
       }
   },
 
@@ -159,7 +158,6 @@ var app = {
       dicesToReset[index].innerHTML = dices[index + 1];
       dicesToReset[index].classList.remove('selected');
       dicesToReset[index].classList.remove('text-info');
-      dicesToReset[index].classList.add('fa-spin');
     }
     // on remet le compteur à 0 pour pouvoir recommencer un tour.
     counter = 0;
